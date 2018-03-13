@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "d5bca48e56bbf3a25645858fcab9c285",
+    "content-hash": "6f61f11c3e826eb899c5671953c6e0a3",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -2221,6 +2221,50 @@
                 "environment"
             ],
             "time": "2016-09-01T10:05:43+00:00"
+        },
+        {
+            "name": "zelenin/elo",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zelenin/elo.git",
+                "reference": "88aac22d7d4c83a337250d73089342f903543529"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zelenin/elo/zipball/88aac22d7d4c83a337250d73089342f903543529",
+                "reference": "88aac22d7d4c83a337250d73089342f903543529",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Zelenin\\Elo\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Aleksandr Zelenin",
+                    "email": "aleksandr@zelenin.me",
+                    "homepage": "http://zelenin.me",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A PHP implementation of Elo rating system",
+            "homepage": "https://github.com/zelenin/elo",
+            "keywords": [
+                "Rating",
+                "elo",
+                "ranking"
+            ],
+            "time": "2014-06-17T12:15:53+00:00"
         }
     ],
     "packages-dev": [
@@ -3967,7 +4011,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "zelenin/elo": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
