@@ -8,6 +8,20 @@ use Carbon\Carbon;
 
 class TicketController extends Controller
 {
+    private function carregaParam(){
+        $arrConfig = json_decode(Storage::disk('local')->get('config.json', 'Contents'),true);
+        foreach($arrConfig as $pos => $arrConf) {
+            foreach ($arrConf as $rate => $config) {
+                foreach ($config as $cp => $cv) {
+                    if(count($cv)>1){
+                        $arrParam[$cv["param"]] = 0;
+                    }
+                }
+            }
+        }
+        return $arrParam;
+    }
+
    public function rateTickets(){
 
         //CONVERTE JSON DE TICKETS PARA ARRAY
@@ -30,45 +44,93 @@ class TicketController extends Controller
         foreach($arrTicket as $item => $ticket){
             foreach($ticket as $fields => $value){
                 if(is_array($value)){
-                    $v2 = 0;
+
                     //PERCORRE ARRAY DE PARÂMETROS
-                    foreach($arrConfig[0] as $rate => $config){
+                    foreach($arrConfig as $pos => $arrConf) {
+                        foreach ($arrConf as $rate => $config) {
+                            $constante = 0;
+                            $v2 = 0;
+                            $v1 = 0;
+                            $arrParam = $this->carregaParam();
+                            $i = 1;
 
-                        //BUSCA A OCORRÊNCIA DAS PALAVRAS-CHAVE
-                        foreach($value as $v => $ta){
-                            foreach($ta as $ti => $tv ){
-                                foreach($config as $cp => $cv){
+                            //BUSCA A OCORRÊNCIA DAS PALAVRAS-CHAVE
+                            foreach ($value as $v => $ta) {
+                                foreach ($ta as $ti => $tv) {
+                                    foreach ($config as $cp => $cv) {
 
-                                    //TESTA OCORRÊNCIAS
-                                    if($cv["modo"] == "match"){
-                                        $v1 = preg_match($cv["valor"],$tv);
-                                        if($v1 > 0){
-                                            $v2 += $v1;
+                                        if (count($cv) > 1) {
+                                            //TESTA OCORRÊNCIAS
+                                            if ($cv["modo"] == "match") {
+                                                $v1 += preg_match($cv["valor"], $tv);
+                                                if ($v1 > 0 && $arrParam[$cv["param"]] == 0) {
+                                                    $v2++;
+                                                    $arrParam[$cv["param"]]++;
+                                                }
+                                            }
+
+                                            if ($cv["modo"] == "mismatch" && $arrParam[$cv["param"]] == 0) {
+                                                $v1 += preg_match($cv["valor"], $tv);
+                                                if (count($value) > $i) {
+                                                    $i++;
+                                                } else if ($v1 == 0) {
+                                                    $v2++;
+                                                    $arrParam[$cv["param"]]++;
+                                                }
+                                            }
+
+                                            if ($cv["modo"] == "compara") {
+                                                if ($cv["param"] == "iteracao" && $arrParam[$cv["param"]] == 0) {
+                                                    if (count($value) == (int)$cv["valor"]) {
+                                                        $v2++;
+                                                        $arrParam[$cv["param"]]++;
+                                                    }
+                                                }
+                                            }
+
+                                            //TESTA DATA DE CRIAÇÃO
+                                            if ($cv["modo"] == "diff" && $arrParam[$cv["param"]] == 0) {
+                                                preg_match($cv["valor"], $ticket["DateCreate"], $arrDt);
+                                                $dt1 = Carbon::createFromFormat('Y-m-d', $arrDt[0]);
+                                                if ($dtHoje->diffInDays($dt1) >= $mediaDias) {
+                                                    $v2++;
+                                                    $arrParam[$cv["param"]]++;
+                                                }
+                                            }
                                         }
-                                    }
 
-                                    if($cv["modo"] == "diff"){
-                                        preg_match($cv["valor"],$ticket["DateCreate"],$arrDt);
-                                        $dt1 = Carbon::createFromFormat('Y-m-d', $arrDt[0]);
-                                        if($dtHoje->diffInDays($dt1) >= $mediaDias){
-                                            $v2++;
+                                        if (count($cv) == 1) {
+                                            $constante = $cv["constante"];
                                         }
-                                    }
 
-                                    if($v2 > 0){
-                                        $arrMatriz[$ticket["TicketID"]][$rate] = $v2;
+                                        if ($v2 > 0 && $constante > 0) {
+                                            $arrMatriz[$ticket["TicketID"]][$rate] = ((($v2 * 100) / $constante) + (($v1 / 100) * $constante));
+                                        }
                                     }
                                 }
                             }
                         }
                     }
                 }
-
             }
 
         }
 
-        dd($arrMatriz);
+        foreach($arrMatriz as $id => $arrRates){
+            foreach($arrTicket as $item => $ticket){
+                foreach($arrRates as $rate => $valor){
+                    if($ticket["TicketID"] == $id){
+                        if($valor > 70){
+                            $arrTicket[$item]["prioridade"] = $rate;
+                        } else{
+                            $arrTicket[$item]["prioridade"] = array_keys($arrRates,max($arrRates))[0];
+                        }
+                    }
+                }
+            }
+        }
+
+        dd($arrTicket);
 
        //return view()->with('tickets',$tickets);
    }
