@@ -1,3 +1,61 @@
+#Instrições para execução do Projeto
+
+O projeto foi feito utilizando o framework Laravel. As instruções de instalação estão nesse link:https://laravel.com/docs/5.6#installation
+
+Após a instalação do Laravel abra o terminal e vá para o diretório do projeto.
+```bash
+#Instalar as dependencias
+composer install
+
+#Executar o projeto
+php artisan serve
+
+#O terminal exibirá a mensagem de confirmação
+Laravel development server started: <http://127.0.0.1:8000> 
+```
+
+Acesse o projeto através da url http://localhost:8000
+
+O projeto foi desenvolvido de modo que a api rode o algoritmo de classificação a cada busca para facilitar os testes.
+
+### Documentação da API
+
+A rota para a API é "/api/tickets/search" e os parâmetros de busca são adicionados à url.
+
+```bash
+
+http://localhost:8000/api/tickets/search/{prioridade}
+
+http://localhost:8000/api/tickets/search/{data inicial}/{data final}
+
+http://localhost:8000/api/tickets/search/{data incial}/{data final}/{prioridade}
+
+http://localhost:8000/api/tickets/search/{order by}
+
+http://localhost:8000/api/tickets/search/{prioridade}/{order by}
+
+http://localhost:8000/api/tickets/search/{data inicial}/{data final}/{order by}
+
+http://localhost:8000/api/tickets/search/{data incial}/{data final}/{prioridade}/{order by}
+
+http://localhost:8000/api/tickets/search/{numero de registros}/{numero da página}
+
+http://localhost:8000/api/tickets/search/{prioridade}/{numero de registros}/{numero da página}
+
+http://localhost:8000/api/tickets/search/{prioridade}/{order by}/{número de registros}/{número da página}
+
+http://localhost:8000/api/tickets/search/{data incial}/{data final}/{número de registros}/{número da página}
+
+http://localhost:8000/api/tickets/search/{data incial}/{data final}/{prioridade}/{order by}
+
+http://localhost:8000/api/tickets/search/{order by}/{número de registros}/{número da página}
+
+```
+- {prioridade} para filtro por prioridade podendo ser "alta" ou "normal"
+- {data inicial} e {data final} para filtro por data de criação podendo ser no formado "Y-m-d"
+- {order by} podendo ser "dataatualizacao" ou "datacriacao" para ordenação.
+- {número de registros} e {número da página} para paginação podendo apenas números 
+
 # Desafio desenvolvedor backend
 
 Precisamos melhorar o atendimento no Brasil, para alcançar esse resultado, precisamos de um algoritmo que classifique
