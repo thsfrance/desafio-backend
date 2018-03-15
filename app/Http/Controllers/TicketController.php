@@ -69,7 +69,7 @@ class TicketController extends Controller
             }
         }
 
-        if(count($request->route()->parameters()) == 0 || !empty($request->route('numregistros'))){
+        if(count($request->route()->parameters()) == 0){ //  || !empty($request->route('numregistros'))){
             $arrResult = $arrTickets;
         }
 
