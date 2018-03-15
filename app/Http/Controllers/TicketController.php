@@ -30,7 +30,6 @@ class TicketController extends Controller
     }
 
     public function search(Request $request){
-
         $this->rateTickets();
 
         $arrTickets = json_decode($this->carregaTickets('tickets.json'),true);
@@ -70,8 +69,18 @@ class TicketController extends Controller
             }
         }
 
+        if(count($request->route()->parameters()) == 0 || !empty($request->route('numregistros'))){
+            $arrResult = $arrTickets;
+        }
+
+        if(!empty($request->route('numregistros')) && !empty($request->route('page'))){
+            //dd(count($arrResult)-(($request->route('page')-1)*$request->route('numregistros')));
+            $arrResult = array_slice($arrResult,$request->route('numregistros')*($request->route('page')-1),$request->route('numregistros'),true);
+        }
+
         unset($dateMatch);
-        dd($arrResult);
+        return response()->json($arrResult);
+        //dd($arrResult);
 
     }
 
@@ -166,9 +175,9 @@ class TicketController extends Controller
 
                                                 }
 
-                                                if ($cv["modo"] == "compara") {
+                                                if ($cv["modo"] == "menorigual") {
                                                     if ($cv["param"] == "iteracao") {
-                                                        if (count($value) == (int)$cv["valor"] && $arrParam[$cv["param"]] == 0) {
+                                                        if (count($value) <= (int)$cv["valor"] && $arrParam[$cv["param"]] == 0) {
                                                             $score += $cv["score"];
                                                             $arrParam[$cv["param"]] = 1;
                                                         }
