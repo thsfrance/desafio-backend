@@ -21,6 +21,7 @@ O projeto foi desenvolvido de modo que a api rode o algoritmo de classificação
 ### Documentação da API
 
 A rota para a API é "/api/tickets/search" e os parâmetros de busca são adicionados à url.
+Para que o arquivos "tickets.json" seja acessado, o mesmo deve estar no caminho "{pasta do projeto}/storage/app".
 
 ```bash
 

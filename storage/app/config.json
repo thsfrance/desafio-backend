@@ -1,0 +1,140 @@
+[
+  {
+    "Alta": [
+      {
+        "param": "reclamacao",
+        "valor": "/[Rr][Ee][Cc][Ll][Aa][Mm][Aa][A-Za-z0-9]*/",
+        "modo":"match",
+        "score":10
+      },
+      {
+        "param": "reclamacao",
+        "valor":"/[Pp][Rr][Oo][Cc][Oo][Nn]/",
+        "modo": "match",
+        "score":10
+      },
+      {
+        "param": "reclamacao",
+        "valor":"/[Rr][Ee][Cc][Ll][Aa][Mm][Ee][Aa][Qq][Uu][Ii]/",
+        "modo":"match",
+        "score":10
+      },
+      {
+        "param": "insatisfacao",
+        "valor": "/[Cc][Oo][Mm][Pp][Rr][A-Za-z]+/",
+        "modo": "match",
+        "score":5
+      },
+      {
+        "param": "insatisfacao",
+        "valor": "/[Dd][Ee][Ff][Ee][Ii][Tt][Oo]/",
+        "modo": "match",
+        "score":30
+      },
+      {
+        "param": "insatisfacao",
+        "valor": "/[Tt][Rr][Oo][Cc][A-Za-z]*/",
+        "modo":"match",
+        "score":30
+      },
+      {
+        "param": "prazo",
+        "valor": "[0-9]{4}-(0[1-9]|1[0,1,2])-([1-9]|0[1-9]|[1,2][0-9]|3[0,1])",
+        "modo":"diff",
+        "score":10
+      },
+      {
+        "constante":3
+      }
+    ],
+    "Normal":[
+      {
+        "param": "insatisfacao",
+        "valor": "/[Rr][Ee][Cc][Ll][Aa][Mm][Aa][A-Za-z0-9]*/",
+        "modo":"mismatch",
+        "score":10
+      },
+      {
+        "param": "insatisfacao",
+        "valor":"/[Pp][Rr][Oo][Cc][Oo][Nn]/",
+        "modo": "mismatch",
+        "score":10
+      },
+      {
+        "param": "insatisfacao",
+        "valor":"/[Rr][Ee][Cc][Ll][Aa][Mm][Ee][Aa][Qq][Uu][Ii]/",
+        "modo":"mismatch",
+        "score":10
+      },
+      {
+        "param": "insatisfacao",
+        "valor": "/[Cc][Oo][Mm][Pp][Rr][A-Za-z0-9]*/",
+        "modo": "mismatch",
+        "score":10
+      },
+      {
+        "param": "insatisfacao",
+        "valor": "/[Cc][Oo][Mm][Pp][Rr][A-Za-z]+/",
+        "modo": "mismatch",
+        "score":10
+      },
+      {
+        "param": "insatisfacao",
+        "valor": "/[Dd][Ee][Ff][Ee][Ii][Tt][Oo]/",
+        "modo": "mismatch",
+        "score":10
+      },
+      {
+        "param": "insatisfacao",
+        "valor": "/[Tt][Rr][Oo][Cc][A-Za-z]*/",
+        "modo":"mismatch",
+        "score":10
+      },
+      {
+        "param": "duvida",
+        "valor":"/[Dd](ú|[A-Za-z])[Vv][Ii][Dd][Aa][A-Za-z]*/",
+        "modo": "match",
+        "score":30
+      },
+      {
+        "param": "elogio",
+        "valor": "/[Ee][Ll][Oo][Gg][Ii][Oo][A-Za-z]*/",
+        "modo":"match",
+        "score":30
+      },
+      {
+        "param": "duvida",
+        "valor": "/[Pp][Rr][Oo][Cc][Uu][Rr][Aa][A-Za-z]*/",
+        "modo": "match",
+        "score":30
+      },
+      {
+        "param": "duvida",
+        "valor": "/[Ss][Aa][Bb][Ee][A-Za-z]*/",
+        "modo": "match",
+        "score":30
+      },
+      {
+        "param":"duvida",
+        "valor":"/[Dd][Ii][Ss][Pp][Oo][Nn](í|[A-Za-z])[VvBb]([Ee][Ll]|[Ii][Ll][Ii][Dd][Aa][Dd][Ee])/",
+        "modo":"match",
+        "score":30
+      },
+      {
+        "param":"duvida",
+        "valor": "/[Cc][Oo][Nn][Ff][Ii][Rr][Mm][Aa][A-Za-z]*/",
+        "modo":"match",
+        "score":30
+      },
+      {
+        "param": "iteracao",
+        "valor": 2,
+        "modo": "menorigual",
+        "score":10
+      },
+      {
+        "constante":6
+      }
+    ]
+  }
+]
